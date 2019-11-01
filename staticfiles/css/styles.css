@@ -1,0 +1,529 @@
+    #img01
+{
+  margin-left: 120px;
+   
+}
+#img02
+{
+margin-top: 20px; 
+  margin-left: 180px; 
+  
+}
+#img03
+{
+   
+  margin-left: 200px;   
+}
+   
+#select
+{
+    margin-top: 50px;
+}
+#select01
+
+{
+    margin-top: 70px;
+}
+
+.welimg2
+{
+   height="160px";
+    width="480px"; 
+}
+a#job
+{
+    text-decoration: none
+}
+.welbtn
+{
+    margin-right: 80px;
+   font-size: 35px;
+    color: white;
+    border-radius: 35px;
+    width: 550px;
+    font-weight: bold;
+    padding: 10px;
+    background-color: red;
+    cursor: pointer;
+}
+.welbtn:hover
+{
+     color: white;
+    background-color: limegreen; 
+}
+
+a.log01
+{
+    font-size: 25px;
+    color: black;
+    text-decoration: none;
+     font-weight: bold;
+}
+a.log01:hover
+{
+    color: gainsboro;
+     text-decoration: none;
+}
+a.wel1
+{
+    font-size: 25px;
+    color: white;
+    text-decoration: none;
+     font-weight: bold;
+}
+a.wel1:hover
+{
+    color: gainsboro;
+     text-decoration: none;
+}
+
+a.head01
+{
+    font-size: 22px;
+    padding: 15px;
+    color: black;
+    text-decoration: none;
+}
+a.head01:hover
+{
+    color: dodgerblue;
+}
+a.view
+{
+    text-decoration: none;
+}
+.view1 {
+  display: block;
+  width: 70%;
+  border: none;
+  background-color:black;
+  color: white;
+  
+  
+  cursor: pointer;
+  text-align: center;
+      border-radius: 16px;
+}
+
+.view1:hover {
+  background-color:limegreen;
+  color: white;
+}
+
+.block {
+  display: block;
+  width: 25%;
+ 
+  border: none;
+  background-color:red;
+  color: white;
+  padding: 10px 20px;
+  font-size: 25px;
+  cursor: pointer;
+  text-align: center;
+      border-radius: 16px;
+}
+
+.block:hover {
+  background-color:limegreen;
+  color: white;
+}
+.block1 {
+  display: block;
+  width: 18%;
+ 
+  border: none;
+  background-color:red;
+  color: white;
+  padding: 10px 20px;
+  font-size: 25px;
+  cursor: pointer;
+  text-align: center;
+      border-radius: 16px;
+}
+
+.block1:hover {
+  background-color:limegreen;
+  color: white;
+}
+.start {
+  display: block;
+  width: 16%;
+  border: none;
+  background-color:black;
+  color: white;
+  padding: 10px 28px;
+  font-size: 25px;
+  cursor: pointer;
+  text-align: center;
+      border-radius: 16px;
+}
+
+.start:hover {
+  background-color:limegreen;
+  color: white;
+}
+
+
+.details
+{
+    font-size: 22px;
+}
+.avatar {
+  vertical-align: middle;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+#tab
+{
+    font-size: 22px;
+   
+}
+.ans
+{
+    
+    padding-left: 500px;
+    padding-bottom: 50px;
+}
+.boarder01
+{
+    border: 1px solid black;
+    padding: 4px;
+   
+    
+    
+}
+.btn01
+{
+    background-color: dodgerblue;
+    color: white;
+    width: 12%;;
+    padding: 10px 20px;
+    font-size: 30px;
+    border-radius: 16px;
+    cursor: pointer;
+}
+.btn01:hover
+{
+    background-color: limegreen;
+    color: black;
+}
+.regbtn
+{
+    background-color:black;
+    color: white;
+    width: 12%;;
+    
+    font-size: 30px;
+    border-radius: 16px;
+    cursor: pointer;
+}
+.regbtn:hover
+{
+    background-color: limegreen;
+    color: black;
+}
+#testid
+{
+  display:grid;
+   color: dodgerblue;
+    border: 1px solid black;
+    font-weight: bold;
+    
+}
+.question
+{
+    background-color: aqua;
+}
+
+a.btnst
+{
+   
+    text-decoration: none;
+}
+
+#joinmon
+{
+    padding-right: 100px;
+}
+
+#weltext1
+{
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+}
+#weltext2
+{
+    font-size: 25px;
+    font-weight: bold;
+    color:black;
+    
+}
+.example {
+  padding: 20px;
+  color: black;
+}
+.heading01
+{
+  color: red;
+    font-size: 35px;
+    font-weight: bold;
+}
+.footer
+{
+    position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+    height: 10%;
+   background-color: black;
+   
+   
+    
+}
+.footertext
+{
+     padding-left: 10px;
+    padding-top:16px; 
+   color: white; 
+}
+#cdlogo
+{
+    height: 60px;
+}
+#base01
+{
+    background-image: url(../img/bg0016.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+
+
+
+/*-------------media-----------------*/
+
+@media only screen and (max-width: 500px) {
+ 
+    #select01
+
+{
+    margin-top: 10px;
+}
+    #select
+    {
+        width: 100;
+        height: 100px;
+    }
+    #tab
+{
+    font-size: 15px;
+    width: 15px;
+}
+
+    #img01
+{
+  width: 300px;
+   display: block;
+  margin-left: auto;
+  margin-right: auto;
+   
+}
+#img02
+{
+width: 300px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+   
+}
+#img03
+{
+   
+  width: 300px;
+ display: block;
+  margin-left: auto;
+  margin-right: auto;
+    
+   
+}
+   
+    #weltext01
+{
+    
+    font-size: 20px;
+    font-weight: bold;
+     text-align: center;
+    
+}
+  #weltext02
+{
+    font-size: 20px;
+    font-weight: bold;
+   text-align: center;
+}
+  #weltext03
+{
+    font-size: 20px;
+    font-weight: bold;
+ 
+    text-align: center;
+}
+    
+    
+    
+    
+    
+    
+    
+#weltext1,#weltext
+    {
+       font-size: 20px;
+    } 
+ .welbtn
+    {
+   margin-right: 20px;
+        margin-top: 20px;
+   font-size: 20px;
+    
+    width: 300px;
+   
+    padding: 6px;
+    
+  
+    }
+    #bg001
+    {
+        height: 800px;
+        
+    }
+}
+
+
+#base01
+    {   
+        
+    background-image: url(../img/bg0019.jpg);  
+    background-repeat: no-repeat;
+    background-size: cover;
+        height: 885px;
+    }
+
+    
+
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+ 
+ 
+   
+#base01
+    {   
+        
+    background-image: url(../img/bg0023.jpg);  
+   width: 1920px;
+    background-size: cover;
+        height: 885px;
+    }
+    
+    
+    #weltext1,#weltext
+    {
+       font-size: 25px;
+    } 
+    .welbtn
+    {
+     margin-right: 80px;
+   font-size: 30px;
+    color: white;
+ 
+    width: 400px;
+  
+    padding: 8px;
+  }
+#bg001
+    {
+        height: 800px;
+    }
+} 
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+ 
+
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+ 
+    #quelogout
+{
+  margin-left: 1500px;
+}
+
+    #base01
+{
+    background-image: url(../img/bg0016.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+    #img01
+{
+  margin-left: 120px;
+   
+}
+#img02
+{
+margin-top: 20px; 
+  margin-left: 200px; 
+  
+}
+#img03
+{
+   
+  margin-left: 200px;   
+}
+   
+    #weltext01
+{
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 250px;
+    margin-top: 10px;
+}
+  #weltext02
+{
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 280px;
+    margin-top: 10px;
+}
+  #weltext03
+{
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 360px;
+    margin-top: 10px;
+   
+}
+    
+    #weltext1,#weltext
+    {
+       font-size: 15px;
+    }   
+ .welbtn
+    {
+   margin-right: 80px;
+   font-size: 35px;
+   width: 550px;
+   padding: 10px;
+    
+  }
+   
+}
+
+
+
+

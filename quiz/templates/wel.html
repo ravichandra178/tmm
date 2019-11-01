@@ -1,0 +1,71 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html xmlns:fb="http://www.facebook.com/2008/fbml" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="shortcut icon" type="image/png" href="{%static 'img/tittle01.png' %}" /><title>Talented Monkeys</title>
+  <meta name="description" content="{% block description %}{% endblock %}">
+
+  <!-- styles -->
+  <!--<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">-->
+  {% block head %}
+  {% endblock %}
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  {% block style %}
+  {% endblock %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+ <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+ 
+   
+ <center>
+     <p id="weltext1">
+TalentedMonkeys is the platform for all the passionate learners 
+
+
+to assess their skills and to improve their skills from zero to expert level.
+     </p>
+     <div class="row">
+         
+         <div class="col-sm-3">
+           
+         </div>
+       
+            
+         <div class="col-sm-5">
+      
+     <img class="img-fluid" src ="{% static 'img/hello.png' %}">
+         </div>
+          <div class="col-sm-3">
+                    
+         </div>
+        
+     </div>
+  
+            
+        
+     <a id="job"  href="{% url 'registration_register' %}"> <p class="welbtn">Join Talentedmonkeys...!</p></a>
+    <br>
+     <p id="weltext2">
+But remember,keep it Simple ! Start Here and Reach Your Goal... 
+     </p>
+    
+    
+    </center>
+      
+    
+ 
+   
+    
+    
+    </body>
+</html>
+

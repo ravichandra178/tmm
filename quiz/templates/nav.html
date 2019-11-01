@@ -1,0 +1,15 @@
+<div class="collapse navbar-collapse col-md-6" id="myNavbar">
+          <div class="nav nav-pills nav-fill ml-auto">
+              <span class="time-div nav-item" id="time_left" ></span>
+              <form id="logout" action="{{URL_ROOT}}/exam/quit/{{ paper.attempt_number }}/{{module.id}}/{{ paper.question_paper.id }}/{{course.id}}/" method="post" class="ml-auto">
+              {% csrf_token %}
+              <span class="nav-item"><button class="nav-link  btn-danger" type="submit" name="quit">
+                {% if paper.questions_unanswered.all %}
+                  Quit {{ quiz_type }}
+                {% else %}
+                  Finish {{ quiz_type }}
+                {% endif %}
+              <span class="fa fa-power-off"></span></button></span>
+              </form>
+          </div>
+      </div>

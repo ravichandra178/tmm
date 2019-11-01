@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% load quiz_tags %}
+
+{% block title %} {{ quiz.title}} {% endblock %}
+{% block description %} {% trans "Exam Results for" %} {{ quiz.title }} {% endblock %}
+
+{% block content %}
+
+  {% if previous.answers %}
+
+  <p class="muted"><small>{% trans "The previous question" %}:</small></p>
+  <p>{{ previous.previous_question }}</p>
+  {% if previous.previous_question.qtype == 'ddq' %}
+       a) {{previous.previous_question.step1}}<br>
+       b) {{previous.previous_question.step2}}<br>
+       c) {{previous.previous_question.step3}}<br>
+       d) {{previous.previous_question.step4}}<br>
+       e) {{previous.previous_question.step5}}<br>
+       f) {{previous.previous_question.step6}}<br>
+       g) {{previous.previous_question.step7}}<br>
+       h) {{previous.previous_question.step8}}<br><br>
+    {% endif %}
+  <p>Your answer was
+	<strong>
+	  {{ previous.previous_outcome|yesno:"correct,incorrect" }}
+	</strong>
+  </p>
+  {% include 'correct_answer.html' %}
+  <p><strong>{% trans "Explanation" %}:</strong></p>
+  <div class="well " style="background-color: #d2b4de;">
+    <p>{{ previous.previous_question.explanation }}</p>
+  </div>
+  <hr>
+
+  {% endif %}
+
+  {% if max_score %}
+
+  <div>
+	<h2>{% trans "Exam results" %}</h2>
+	<p>
+	  <small class="muted">{% trans "Exam title" %}: </small>
+	  <strong>{{ quiz.title }}</strong></p>
+
+	<p class="lead">
+	  {% trans "You answered" %} {{ score }} {% trans "questions correctly out of" %} {{ max_score }}, {% trans "giving you" %} {{ percent }} {% trans "percent correct" %}
+	</p>
+
+	{% if quiz.pass_mark %}
+	<hr>
+        <p class="lead">{{ sitting.result_message }}</p>
+	<hr>
+
+	{% endif %}
+
+	<p>{% trans "Review the questions below and try the exam again in the future"%}.</p>
+
+	{% if user.is_authenticated %}
+
+	  <p>{% trans "The result of this exam will be stored in your progress section so you can review and monitor your progression" %}.</p>
+
+	{% endif %}
+  </div>
+
+
+  {% endif %}
+
+
+  <hr>
+
+  {% if possible %}
+
+  <p class="lead">
+	{% trans "Your session score is" %} {{ session }} {% trans "out of a possible" %} {{ possible }}
+  </p>
+
+  <hr>
+
+  {% endif %}
+
+  {% if questions %}
+
+    {% for question in questions %}
+    <div class="well " style="color: #2e86c1;">
+      <p><b>Question No: {{forloop.counter}}</b></p>
+      </div>
+      <p class="well">
+		<b>{{ question.content }}</b>
+	  </p>
+    {% if question.figure %}
+    <img src="{{question.figure.url}}">
+    {% endif %}
+    {% if question.qtype == 'ddq' %}
+       a) {{question.step1}}<br>
+       b) {{question.step2}}<br>
+       c) {{question.step3}}<br>
+       d) {{question.step4}}<br>
+       e) {{question.step5}}<br>
+       f) {{question.step6}}<br>
+       g) {{question.step7}}<br>
+       h) {{question.step8}}<br><br>
+    {% endif %}
+
+
+    {% if question.correct_ans == question|answer_choice_to_string:question.user_answer %}
+    {% if question.user_answer %}
+      <div class="well " style="color: #1e8449;">
+      <p><b>{% trans "Your answer" %} : {{ question|answer_choice_to_string:question.user_answer }}</b></p>
+      </div>
+      {% endif %}
+    {% else %}
+    {% if question.user_answer %}
+      <div class="well " style="color: #ff0000;">
+      <p><b>{% trans "Your answer" %} : {{ question|answer_choice_to_string:question.user_answer }}</b></p>
+      </div>
+      {% endif %}
+    {% endif %}
+
+	  {% correct_answer_for_all question %}
+
+
+
+	  <p><strong>{% trans "Explanation" %}:</strong></p>
+	  <div class="well " style="color: #8e44ad;">
+		<p><b>{{ question.explanation|safe }}</b></p>
+	  </div>
+
+	  <hr>
+
+  {% endfor %}
+
+  {% endif %}
+
+
+{% endblock %}

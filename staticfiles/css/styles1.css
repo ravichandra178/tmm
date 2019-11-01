@@ -1,0 +1,167 @@
+
+a.log01
+{
+     font-weight: bold;
+    font-size: 25px;
+    color:black;
+    text-decoration: none;
+   
+}
+a.log01:hover
+{
+    color: gainsboro;
+     text-decoration: none;
+}
+a.log02
+{
+    
+    font-size: 25px;
+   font-weight: bold;
+    color: red;
+    text-decoration: none;
+}
+a.log02:hover
+{
+    color: green;
+     text-decoration: none;
+}
+a.head01
+{
+    font-size: 22px;
+    padding: 15px;
+    color: black;
+    text-decoration: none;
+}
+a.head01:hover
+{
+    color: dodgerblue;
+}
+
+.back001
+{
+    background-image: url(../img/bg0016.jpg);
+     background-repeat: no-repeat;
+     background-size: cover;  
+}
+.back004
+{
+    background-image: url();
+     background-repeat: no-repeat;
+     background-size: cover;  
+}
+.bg01
+{
+    background-image: url(../img/bg0016.jpg);
+     background-repeat: no-repeat;
+     background-size: cover;  
+}
+
+.details
+{
+    font-size: 22px;
+}
+.avatar {
+  vertical-align: middle;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+#tab
+{
+    font-size: 22px;
+}
+.ans
+{
+    
+    padding-left: 500px;
+    padding-bottom: 50px;
+}
+.boarder01
+{
+    border: 1px solid black;
+    padding: 4px;
+   
+    
+    
+}
+.btn2
+{
+    background-color: black;
+    color: white;
+    width: 10%;
+    font-size: 20px;
+   padding: 10px 20px;
+     border-radius: 16px;
+    cursor: pointer;
+    
+}
+.btn2:hover
+{
+    background-color: limegreen;
+    color: black;
+}
+.btn3
+{
+    background-color: black;
+    color: white;
+    width: 10%;
+    font-size: 20px;
+    padding: 10px 20px;
+     border-radius: 16px;
+    cursor: pointer;
+    
+}
+.btn3:hover
+{
+    background-color: red;
+    color: white;
+}
+#testid
+{
+  display:grid;
+   color: dodgerblue;
+    border: 1px solid black;
+    font-weight: bold;
+    
+}
+#ex01
+{
+    font-size: 20px;
+}
+
+#joinmon
+{
+    padding-left: 10px;
+}
+.example {
+  padding: 20px;
+  color: black;
+}
+@media only screen and (max-width: 600px) {
+  
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+ 
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+ 
+} 
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+ 
+} 
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  
+}
+
+
+
+  
+

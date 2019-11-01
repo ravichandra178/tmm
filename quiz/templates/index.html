@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+{% if user.is_authenticated %}
+<br>
+<br>
+<br>
+
+<img class="avatar" src ="{% static 'img/p.jpg' %}">
+    <div class="details"><p>Username: {{user.username}}</p>
+    <p >Name: {{user.first_name}} {{user.last_name}}</p>
+    <p>Email: {{user.email}}</p>
+       
+</div>
+
+{% else %}
+{% include 'wel.html' %}
+
+{% endif %}
+   
+{% endblock  %}

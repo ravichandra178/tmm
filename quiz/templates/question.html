@@ -1,0 +1,210 @@
+{% extends "base_.html" %}
+{% load i18n%}
+{% load static %}
+<html>
+{% block title %} {{ quiz.title }} {% endblock %}
+{% block description %} {{ quiz.title }} - {{ quiz.description }} {% endblock %}
+
+{% block content %}
+
+{% if previous.answers %}
+<head>
+<meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles1.css' %}">
+</head>
+<body class="question">
+<br>
+    <br>
+  <p class="muted"><small>{% trans "The previous question" %}:</small></p>
+  <p>{{ previous.previous_question }}</p>
+  {% if previous.previous_question.qtype == 'ddq' %}
+       a) {{previous.previous_question.step1}}<br>
+       b) {{previous.previous_question.step2}}<br>
+       c) {{previous.previous_question.step3}}<br>
+       d) {{previous.previous_question.step4}}<br>
+       e) {{previous.previous_question.step5}}<br>
+       f) {{previous.previous_question.step6}}<br>
+       g) {{previous.previous_question.step7}}<br>
+       h) {{previous.previous_question.step8}}<br><br>
+    {% endif %}
+
+  {% if previous.previous_outcome %}
+	<div class="alert alert-success">
+  {% else %}
+	<div class="alert alert-warning">
+  {% endif %}
+  	  <p><small>
+		{% trans "Your answer was" %} </small>
+		<strong>
+		  {{ previous.previous_outcome|yesno:"correct,incorrect" }}
+		</strong>
+	  </p>
+
+	</div>
+
+	{% include 'correct_answer.html' %}
+
+	<p><strong>{% trans "Explanation" %}:</strong></p>
+	<div class="well " style="background-color: #fcf8e3;">
+	  <p>{{ previous.previous_question.explanation }}</p>
+	</div>
+
+	<hr>
+
+{% endif %}
+
+<br />
+
+{% if question %}
+
+{% if progress %}
+<div style="float: right;">
+{% trans "Question" %} {{ progress.0|add:1 }} {% trans "of" %} {{ progress.1 }}
+</div>
+{% endif %}
+<br>
+        <br>
+
+       
+<p>
+  <small class="muted" id="ex01">{% trans "Question category" %}:</small>
+  <strong>{{ question.category }}</strong>
+</p>
+
+<p class="lead">{{ question.content|linebreaks }}</p>
+  
+
+
+{% if question.figure %}
+    <img src="{{ question.figure.url }}" alt="{{ question.content }}" />
+{% endif %}
+
+
+  
+  <input type=hidden name="question_id" value="{{ question.id }}"><br>
+  
+
+{% if question.qtype == 'mcq' %}  
+    
+<form action="" method="POST" autocomplete="off">{% csrf_token %}
+  <ul class="list-group">
+	
+
+	{% for answer in form.answers %}
+	  <li class="list-group-item">
+	       {{ answer }}		
+	  </li>
+	{% endfor %}
+
+  </ul>
+    <br>
+    
+  
+    {% if progress.0|add:1 == progress.1 %}
+    
+  <input type="submit" value={% trans "Submit" %} class="btn btn-outline-success" style="width: 100px">
+	
+    {% else %}
+          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input type="submit" value={% trans "Next" %} class="btn btn-outline-success" style="width: 100px">
+		
+    {% endif %}
+	
+&nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;	<input type="button" value="Reset" onClick="location.href=location.href" class="btn btn-outline-danger" style="width: 100px" >
+
+	
+</form>
+
+{% endif %}
+{% if question.qtype == 'fitb' %}  
+<form action="" method="POST" autocomplete="off">{% csrf_token %}
+  <ul class="list-group">
+  
+
+  {% for answer in form.answers %}
+    <li class="list-group-item">
+         {{ answer }}   
+    </li>
+  {% endfor %}
+
+  </ul>
+     <br>
+    
+        
+    {% if progress.0|add:1 == progress.1 %}
+    
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input type="submit" value={% trans "Submit" %} class="btn btn-outline-success" style="width: 100px" >
+  
+    {% else %}
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input type="submit" value={% trans "Next" %} class="btn btn-outline-success" style="width: 100px" >
+    
+    {% endif %}
+  
+  &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input type="button" value="Reset" onClick="location.href=location.href" class="btn btn btn-outline-danger" style="width: 100px">
+  
+</form>
+{% endif %}
+{% if question.qtype == 'ddq' %}
+        
+{% include 'sort4.html' %}
+{% include 'halo.html' %}
+       
+<form action="" method="POST" autocomplete="off">{% csrf_token %}
+  
+  <tr><th></th><td><input type="hidden" name="answers" style="width:100%" required id="id_answers" value=""/></td></tr>
+     <br>
+         <br>
+         
+	 <div class="row">
+        
+    
+
+    {% if progress.0|add:1 == progress.1 %}
+     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;<input type="submit" value={% trans "Submit" %} class="btn btn-outline-success" style="width: 100px">
+	
+    {% else %}
+       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;<input type="submit" value={% trans "Next" %} class="btn btn-outline-success" style="width: 100px">
+		
+    {% endif %}
+	&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;<input type="button" value="Reset" onClick="location.href=location.href" class="btn btn-outline-danger" style="width: 100px">
+         </div>
+    
+
+</div>
+
+{% endif %}
+</form>
+{% if question.qtype == 'essay' %}  
+       
+<form action="" method="POST" autocomplete="off">{% csrf_token %}
+  <ul class="list-group">
+	
+
+	{% for answer in form.answers %}
+	  <li class="list-group-item">
+	       {{ answer }}		
+	  </li>
+	{% endfor %}
+
+  </ul>
+    <br>
+   
+  
+    {% if progress.0|add:1 == progress.1 %}
+    
+  <input type="submit" value={% trans "Submit" %} class="btn btn-outline-success">
+	
+    {% else %}
+          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input type="submit" value={% trans "Next" %} class="btn btn-outline-success" style="width: 100px">
+		
+    {% endif %}
+	
+&nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;	<input type="button" value="Reset" onClick="location.href=location.href"class="btn btn-outline-danger" style="width: 100px">
+	
+</form>
+
+{% endif %}
+{% endif %}
+  
+{% endblock %}
+</body>
+</html>

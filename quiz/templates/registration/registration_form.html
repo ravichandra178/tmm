@@ -1,0 +1,74 @@
+{% extends "registration/registration_base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block title %}{% trans "Register for an account" %}{% endblock %}
+
+{% block content %}
+<p><b style="font-size: 35px">Registration</b></p>
+<br>
+
+   
+<form method="post" action="">
+    {% csrf_token %}
+    <!--<table>
+    <tr><th><label class="required" for="id_username">Username:</label></th><td><input type="text" name="username" maxlength="150" autofocus required id="id_username" /><br /><span class="helptext">Letters, digits and @/./+/-/_ only.</span></td></tr>
+<tr><th><label for="id_first_name">First name:</label></th><td><input type="text" name="first_name" maxlength="30" id="id_first_name" /></td></tr>
+<tr><th><label for="id_last_name">Last name:</label></th><td><input type="text" name="last_name" maxlength="30" id="id_last_name" /></td></tr>
+<tr class="required"><th><label class="required" for="id_email">E-mail:</label></th><td><input type="email" name="email" required id="id_email" /></td></tr>
+<tr><th><label for="id_mobile">Mobile:</label></th><td><input type="text" name="mobile" maxlength="10" id="id_mobile" /></td></tr>
+<tr><th><label for="id_college">College:</label></th><td><input type="text" name="college" maxlength="30" id="id_college" /></td></tr>
+<tr><th><label for="id_programminglanguage">Interested Technology:</label></th><td><input type="text" name="programminglanguage" maxlength="30" id="id_programminglanguage" /></td></tr>
+<tr class="required"><th><label class="required" for="id_password1">Password:</label></th><td><input type="password" name="password1" required id="id_password1" /><br /><span class="helptext"><ul><li>Your password can&#39;t be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password can&#39;t be a commonly used password.</li><li>Your password can&#39;t be entirely numeric.</li></ul></span></td></tr>
+<tr class="required"><th><label class="required" for="id_password2">Password confirmation:</label></th><td><input type="password" name="password2" required id="id_password2" /><br /><span class="helptext">Enter the same password as before, for verification.</span></td></tr></table>-->
+  <div class="form-row">
+      <div class="form-group col-md-6 mb-0">
+        {{ form.username|as_crispy_field }}
+      </div>
+      <div class="form-group col-md-6 mb-0">
+      </div>
+      <div class="form-group col-md-6 mb-0">
+        {{ form.first_name|as_crispy_field }}
+      </div>
+      <div class="form-group col-md-6 mb-0">
+        {{ form.last_name|as_crispy_field }}
+    </div>
+       <div class="form-group col-md-6 mb-0">
+        {{ form.password1|as_crispy_field }}
+    </div>
+     <div class="form-group col-md-6 mb-0">
+        {{ form.password2|as_crispy_field }}
+    </div>
+       <div class="form-group col-md-6 mb-0">
+        {{ form.email|as_crispy_field }}
+      </div>
+      <div class="form-group col-md-6 mb-0">
+        {{ form.mobile|as_crispy_field }}
+      </div>
+      
+      <div class="form-group col-md-6 mb-0">
+        {{ form.college|as_crispy_field }}
+      </div>
+      <div class="form-group col-md-6 mb-0">
+        {{ form.programminglanguage|as_crispy_field }}
+      </div>
+    </div>
+    
+    <br>
+    <button type="submit" class="btn btn-success btn-lg">{% trans 'Submit' %}</button>
+   <!--<input class="regbtn" type="submit" value="{% trans 'Submit' %}" />-->
+</form>
+   
+{% endblock %}<button type="submit" class="btn btn-success">Sign in</button>
+
+
+{% comment %}
+**registration/registration_form.html**
+Used to show the form users will fill out to register. By default, has
+the following context:
+
+``form``
+    The registration form. This will be an instance of some subclass
+    of ``django.forms.Form``; consult `Django's forms documentation
+    <http://docs.djangoproject.com/en/dev/topics/forms/>`_ for
+    information on how to display this in a template.
+{% endcomment %}

@@ -1,0 +1,62 @@
+{% extends "base1.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Python 3 Compiler</title>
+</head>
+<body>
+    <br>
+    <br>
+    This is only for testing purpose<br>
+    Problems part is coming soon..!
+<form action="" method="POST">
+{% csrf_token %}
+{{ form|crispy }}
+<input class="btn btn-outline-success" type="Submit" name="submit" value="Run"/>&nbsp;&nbsp;&nbsp;
+<input class="btn btn-outline-danger" type="button" value="Reset" onClick="location.href=location.href">
+</form>
+
+{% if submitbutton == "Submit" %} 
+</br> output is </br> {{output}} 
+
+{% endif %}
+
+<!--<div class="sec-widget" data-widget="d1d50a2aba50f80fef27a07352b3f5fa"></div>-->
+
+</body>
+<script>'undefined'=== typeof _trfq || (window._trfq = []);'undefined'=== typeof _trfd && (window._trfd=[]),_trfd.push({'tccl.baseHost':'secureserver.net'}),_trfd.push({'ap':'cpsh'},{'server':'p3plcpnl0769'}) // Monitoring performance to make your website faster. If you want to opt-out, please contact web hosting support.</script><script src='https://img1.wsimg.com/tcc/tcc_l.combined.1.0.6.min.js'></script><script>'undefined'=== typeof _trfq || (window._trfq = []);'undefined'=== typeof _trfd && (window._trfd=[]),_trfd.push({'tccl.baseHost':'secureserver.net'}),_trfd.push({'ap':'cpsh'},{'server':'p3plcpnl0769'}) // Monitoring performance to make your website faster. If you want to opt-out, please contact web hosting support.</script><script src='https://img1.wsimg.com/tcc/tcc_l.combined.1.0.6.min.js'></script>
+<script>
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+</script>
+<script>
+SEC_HTTPS = true;
+SEC_BASE = "compilers.widgets.sphere-engine.com"; 
+(function(d, s, id){ SEC = window.SEC || (window.SEC = []);
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; 
+  js.src = (SEC_HTTPS ? "https" : "http") + "://" + SEC_BASE + "/static/sdk/sdk.js";
+  fjs.parentNode.insertBefore(js, fjs);   
+}(document, "script", "sphere-engine-compilers-jssdk"));
+</script>
+</html>
+
+{% endblock  %}
+

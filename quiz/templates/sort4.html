@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>DDQ</title>
+      <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+      
+      
+      <style>
+        #sortable-5 li, #sortable-6 li
+          {
+             
+          }
+        
+          #sortable-6 
+          {
+              list-style-type: none;
+              border: 1px solid black;
+              height: 300px;
+              padding:25px 25px 25px 25px;
+              font-size: 20px;
+          }
+           #sortable-5
+          { 
+              list-style-type: none;
+              
+              height: 300px;
+              padding:25px 25px 25px 25px;
+              font-size: 20px;
+          }
+         .default {
+            background-color: gainsboro;
+             text-align: center;
+             border: 1px solid black;
+             
+         }
+          
+      </style>
+      
+      <script>
+         $(function() {
+            $( "#sortable-5, #sortable-6" ).sortable({
+               connectWith: "#sortable-5, #sortable-6"
+            });
+         });
+         $(function() {
+            $('#sortable-6').sortable({
+               update: function(event, ui) {
+                  var productOrder = $(this).sortable('toArray').toString();
+                  $('#id_answers').attr("value",function(){return productOrder});
+                  //$("#sortable-9").text (productOrder);
+                  
+          }
+          });
+         });
+      </script>
+   </head>
+   
+   <body>
+      
+         
+       <!--<div class="row">
+        <div class="col-sm-6">
+ <ul id = "sortable-5">
+         <li id = "a" class = "default">{{question.step1}}</li>
+         <li id = "b" class = "default">{{question.step2}}</li>
+         <li id = "c" class = "default">{{question.step3}}</li>
+         <li id = "d" class = "default">{{question.step4}}</li>
+         <li id = "e" class = "default">{{question.step5}}</li>
+         <li id = "f" class = "default">{{question.step6}}</li>
+         <li id = "g" class = "default">{{question.step7}}</li>
+         <li id = "h" class = "default">{{question.step8}}</li>
+      </ul>
+           </div>
+          
+           <div class="col-sm-6">
+   <ul id = "sortable-6">
+        
+      </ul>
+           </div>
+       </div>-->
+   </body>
+</html>

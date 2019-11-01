@@ -1,0 +1,87 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html xmlns:fb="http://www.facebook.com/2008/fbml" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+
+  <link rel="shortcut icon" type="image/png" href="{%static 'img/tittle01.png' %}" /><title>Talented Monkeys</title>
+  <meta name="description" content="{% block description %}{% endblock %}">
+
+  <!-- styles -->
+  <!--<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">-->
+  {% block head %}
+  {% endblock %}
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  {% block style %}
+  {% endblock %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+ <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+
+<body class="example">
+  <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="{% url 'index' %}"><img src ="{% static 'img/logom1.png' %}" height="50px" width="180px"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav rm-auto">
+        {% if user.is_authenticated %}
+        <li class="nav-tem" style="color:gray">
+          <a href="{% url 'index' %}" class="head01">Home</a>
+        </li>
+        <li class="nav-tem" style="color:gray">
+            <a href="https://codegnan.com/about" class="head01">About</a>
+          </li>
+          <li class="nav-tem" style="color:gray">
+          <a href="{% url 'quiz_index' %}" class="head01">Tests</a>
+        </li>
+        <li class="nav-tem" style="color:gray">
+            <a href="{% url 'quiz_progress' %}" class="head01">Progress</a>
+          </li>
+          <li class="nav-tem" style="color:gray">
+          <a href="https://codegnan.com/contact" class="head01">Contact</a>
+        </li>
+        
+        {% endif %}
+
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item ">
+          {% if user.is_authenticated %}
+          <a class="btn btn-outline-danger" href="{% url 'auth_logout' %}">Logout</a>
+          {% else %}
+          <a class="btn btn-outline-danger" href="{% url 'auth_login' %}">Login</a>
+          &nbsp;&nbsp;<a class="btn btn-outline-danger" href="{% url 'registration_register' %}">Sign Up</a>
+          {% endif %}
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <!-- Before the quiz content -->
+
+  <div class="container">
+    {% if messages %} {% for message in messages %}
+    <div class="alert alert-warning alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true"><sup>&times;</sup></span>
+      </button>
+      {{message}}
+    </div>
+    {% endfor %} {% endif %} {% block content %} {% endblock %}
+
+  </div>
+   
+    
+  <!-- After the quiz content -->
+ 
+</body>
+
+</html>
