@@ -22,8 +22,6 @@ from . import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('jet/', include('jet.urls', 'jet')), # Jet URLS
-    path('jet/dashboard/', include('jet.dashboard.urls','jet-dashboard')),
     path('', include('quiz.urls')),
     path('accounts/', include('registration.backends.default.urls')),
 ]

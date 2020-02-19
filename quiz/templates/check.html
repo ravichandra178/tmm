@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Check</title>
+      
+       <link rel="stylesheet" type="text/css" href="{% static 'css/blackboard.css' %}">
+      
+      <style>
+        
+          
+      </style>
+      <body>
+      <p id = check><b></b></p>
+      <button onclick="myFunction()">Check</button>
+
+
+</body>
+<script>
+
+function myFunction() {
+  var ans = document.getElementById("id_answers").value;
+  $.ajax({
+        url: "/code/take/",
+        type: "GET",
+        data: {
+            ans : ans
+        },
+        success: function (data) {
+        	$('#check').html(data.test.result)
+            
+            return true
+        }
+    });
+    return false;
+}
+</script>
+</html>

@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, render
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import FormView
-from .forms import QuestionForm,DDQForm,FITBForm,EssayForm
+from .forms import QuestionForm,DDQForm,FITBForm,EssayForm,CodeForm
 from .models import Quiz, Category, Progress, Sitting, Question
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -14,8 +14,10 @@ from django.contrib import messages
 from ddq.models import DDQuestion,DDAnswer
 from fitb.models import FITBQuestion, FITBAnswer
 from essay.models import Essay_Question,EssayAnswer
+from codequestion.models import CodeQuestion,CodeAnswer
 from django.contrib.auth.mixins import LoginRequiredMixin
 from mcq.models import MCQQuestion,Answer
+from . import runcode
 
 from compilerapp.forms import SourceForm
 import os
@@ -172,7 +174,9 @@ class QuizTake(LoginRequiredMixin,FormView):
         elif self.question.__class__ is FITBQuestion:
             form_class = FITBForm
         elif self.question.__class__ is Essay_Question:
-            form_class = EssayForm 
+            form_class = EssayForm
+        elif self.question.__class__ is CodeQuestion:
+            form_class = CodeForm
         else:
             form_class = self.form_class
         return form_class(**self.get_form_kwargs())
@@ -250,6 +254,49 @@ class QuizTake(LoginRequiredMixin,FormView):
             #for j in x:
                 #correct_ans = j.content
             correct_ans = 'Trial Purpose, This Answer will be graded using Automated Grading System'
+
+
+        elif self.question.qtype == 'code':
+            if 'Run' in self.request.POST:
+                submitbutton = 'Run'
+            cq = ''
+            output = ''
+            code_q = ''
+            test_i = ''
+            test_o = ''
+            result = ''
+            is_correct = ''
+            if form.is_valid():
+                BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                ws = guess
+                cq = CodeAnswer.objects.filter(question_id = self.question.id)
+                for i in cq:
+                    test_i = i.test_input
+                    test_o = i.test_output
+
+            with open(os.path.join(BASE_DIR,'new.py'),'w') as test:
+                test.write('try:\n')
+                test.write('    import builtins\n')
+                test.write('except ImportError:\n')
+                test.write('    import __builtin__ as builtins\n')
+                test.write('def fake_input():\n')
+                test.write("    return "+"'"+test_i+"'"+'\n')
+                test.write("builtins.input = fake_input\n")
+                test.write(ws)
+            os.system('python new.py > out.txt')
+
+            BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            with open(os.path.join(BASE_DIR,'out.txt')) as out_put:
+                output = out_put.read()
+                output = output[:-1]
+
+                if test_o == output:
+                    coderesult = 'Correct!'
+                    is_correct = True
+                else:
+                    coderesult = 'trya9ain'
+                    is_correct = False
+
             
         else:        
             is_correct = self.question.check_if_correct(guess)
@@ -278,6 +325,49 @@ class QuizTake(LoginRequiredMixin,FormView):
 
         self.sitting.add_user_answer(self.question, guess)
         self.sitting.remove_first_question()
+
+    def render_to_response(self, context, **response_kwargs):
+        if self.request.is_ajax():
+            result = self.request.GET["ans"]
+            cq = ''
+            output = ''
+            code_q = ''
+            test_i = ''
+            test_o = ''
+
+            BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+            cq = CodeAnswer.objects.filter(question_id = self.question.id)
+            for i in cq:
+                test_i = i.test_input
+                test_o = i.test_output
+
+            with open(os.path.join(BASE_DIR,'new.py'),'w') as test:
+                test.write('try:\n')
+                test.write('    import builtins\n')
+                test.write('except ImportError:\n')
+                test.write('    import __builtin__ as builtins\n')
+                test.write('def fake_input():\n')
+                test.write("    return "+"'"+test_i+"'"+'\n')
+                test.write("builtins.input = fake_input\n")
+                test.write(result)
+            os.system('python new.py > out.txt')
+
+            with open(os.path.join(BASE_DIR,'out.txt')) as out_put:
+                output = out_put.read()
+                output = output[:-1]
+
+                if test_o == output:
+                    result = 'Correct!'
+                else:
+                    result = 'trya9ain'
+            #result = BASE_DIR
+            test = {
+            'result':result,
+            }
+            return JsonResponse({'test':test},safe=False, **response_kwargs)
+        else:
+            return super(QuizTake,self).render_to_response(context, **response_kwargs)
 
     def final_result_user(self):
         results = {
@@ -348,22 +438,19 @@ def testView(request):
 def compiler(request):
     submitbutton= request.POST.get("submit")
     form= SourceForm(request.POST or None)
-    output = ''
+    rescompil = ''
+    resrun = ''
     if form.is_valid():
-        BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        ws = form.cleaned_data['source']
-        with open(os.path.join(BASE_DIR,'new.py'),'w') as test:
-            test.write(ws)
-        os.system('python new.py > out.txt')
-        BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        with open(os.path.join(BASE_DIR,'out.txt')) as out_put:
-            output = out_put.read()
+        code = form.cleaned_data['source']
+        run = runcode.RunPyCode(code)
+        rescompil, resrun = run.run_py_code()
+        rescompil = rescompil.replace('File "./running/_auth_user_hash.py",','')
+
         context = {
-            'output':output,
+            'resrun':resrun,'rescompil':rescompil,
             }
-        
-        
-    context= {'form': form, 'output' : output,'submitbutton': submitbutton,}
+
+    context= {'form': form, 'resrun':resrun,'rescompil':rescompil, 'submitbutton': submitbutton,}
         
     return render(request, 'compiler/index.html', context)
         

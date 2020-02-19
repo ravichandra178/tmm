@@ -9,6 +9,7 @@ from .models import CSVUpload
 from ddq.models import DDQuestion, DDAnswer
 from fitb.models import FITBQuestion ,FITBAnswer
 from essay.models import Essay_Question, EssayAnswer
+from codequestion.models import CodeQuestion,CodeAnswer
 
 class CSVUploadsAdmin(admin.ModelAdmin):
     model = CSVUpload
@@ -25,6 +26,8 @@ class FITBAnswerInline(admin.TabularInline):
 
 class EssayAnswerInline(admin.TabularInline):
     model = EssayAnswer
+class CodeAnswerInline(admin.TabularInline):
+    model = CodeAnswer
 
 class QuizAdminForm(forms.ModelForm):
     """
@@ -122,6 +125,14 @@ class EssayQuestionAdmin(admin.ModelAdmin):
 
     inlines = [EssayAnswerInline]
 
+class CodeQuestionAdmin(admin.ModelAdmin):
+    list_display = ('content', 'category', )
+    list_filter = ('category',)
+    fields = ('content', 'category', 'quiz', 'explanation', )
+    search_fields = ('content', 'explanation')
+    filter_horizontal = ('quiz',)
+
+    inlines = [CodeAnswerInline]
 
 admin.site.register(Essay_Question, EssayQuestionAdmin)
 admin.site.register(Quiz, QuizAdmin)
@@ -131,4 +142,5 @@ admin.site.register(Progress, ProgressAdmin)
 admin.site.register(CSVUpload, CSVUploadsAdmin)
 admin.site.register(DDQuestion,DDQuestionAdmin)
 admin.site.register(FITBQuestion,FITBQuestionAdmin)
+admin.site.register(CodeQuestion,CodeQuestionAdmin)
 admin.site.register(Profile)

@@ -203,6 +203,36 @@
 </form>
 
 {% endif %}
+
+{% if question.qtype == 'code' %} 
+{% include 'check.html' %} 
+<form action="" method="POST" autocomplete="off">{% csrf_token %}
+  
+  <tr><th><label for="id_answers"></label></th><td><textarea name="answers" cols="40" rows="10" style="width:100%" required id="id_answers">
+</textarea></td></tr>
+     <br>
+         <br>
+         
+   <div class="row">
+        
+    
+
+    {% if progress.0|add:1 == progress.1 %}
+     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;<input type="submit" value={% trans "Submit" %} class="btn btn-outline-success" style="width: 100px">
+  
+    {% else %}
+       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;<input type="submit" value={% trans "Next" %} class="btn btn-outline-success" style="width: 100px">
+    
+    {% endif %}
+  &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;<input type="button" value="Reset" onClick="location.href=location.href" class="btn btn-outline-danger" style="width: 100px">
+         </div>
+    
+
+</div>
+
+{% endif %}
+</form>
+
 {% endif %}
   
 {% endblock %}
