@@ -4,6 +4,7 @@ from quiz.models import Question
 
 class CodeQuestion(Question):
     qtype = models.CharField(max_length = 10,default = 'code')
+    vid = models.FileField(upload_to = '',default = '')
     
     def check_if_correct(self, guess, num):
         return False

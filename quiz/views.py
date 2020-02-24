@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, render
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import FormView
-from .forms import QuestionForm,DDQForm,FITBForm,EssayForm,CodeForm
+from .forms import QuestionForm,DDQForm,FITBForm,EssayForm,CodeForm,DRDForm
 from .models import Quiz, Category, Progress, Sitting, Question
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -15,6 +15,7 @@ from ddq.models import DDQuestion,DDAnswer
 from fitb.models import FITBQuestion, FITBAnswer
 from essay.models import Essay_Question,EssayAnswer
 from codequestion.models import CodeQuestion,CodeAnswer
+from drdq.models import DRDQuestion, DRDAnswer
 from django.contrib.auth.mixins import LoginRequiredMixin
 from mcq.models import MCQQuestion,Answer
 from . import runcode
@@ -177,6 +178,8 @@ class QuizTake(LoginRequiredMixin,FormView):
             form_class = EssayForm
         elif self.question.__class__ is CodeQuestion:
             form_class = CodeForm
+        elif self.question.__class__ is DRDQuestion:
+            form_class = DRDForm
         else:
             form_class = self.form_class
         return form_class(**self.get_form_kwargs())
@@ -223,6 +226,18 @@ class QuizTake(LoginRequiredMixin,FormView):
             #for j in x:
                 #correct_ans = j.content
             z = DDAnswer.objects.filter(correct = False)
+            z.delete()
+
+        elif self.question.qtype == 'drdq':
+            y = DRDAnswer.objects.filter(question_id = self.question.id)
+            list1 = []
+            for i in y:
+                list1.append(i.content)
+            if guess not in list1:
+                r = DRDAnswer(content = guess,question_id = self.question.id)
+                r.save()
+            is_correct = self.question.check_if_correct(guess,num)
+            z = DRDAnswer.objects.filter(correct = False)
             z.delete()
 
 

@@ -38,7 +38,7 @@ class RegistrationForm(UserCreationForm):
     
     class Meta:
         model = User
-        fields = (UsernameField(),"first_name","last_name", "email","mobile","college","programminglanguage")
+        fields = (UsernameField(),"first_name","last_name", "email")
 
 
 class RegistrationFormUsernameLowercase(RegistrationForm):

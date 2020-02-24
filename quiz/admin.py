@@ -10,6 +10,7 @@ from ddq.models import DDQuestion, DDAnswer
 from fitb.models import FITBQuestion ,FITBAnswer
 from essay.models import Essay_Question, EssayAnswer
 from codequestion.models import CodeQuestion,CodeAnswer
+from drdq.models import DRDQuestion,DRDAnswer
 
 class CSVUploadsAdmin(admin.ModelAdmin):
     model = CSVUpload
@@ -20,6 +21,9 @@ class AnswerInline(admin.TabularInline):
 
 class DDAnswerInline(admin.TabularInline):
     model = DDAnswer
+
+class DRDAnswerInline(admin.TabularInline):
+    model = DRDAnswer
 
 class FITBAnswerInline(admin.TabularInline):
     model = FITBAnswer
@@ -128,11 +132,20 @@ class EssayQuestionAdmin(admin.ModelAdmin):
 class CodeQuestionAdmin(admin.ModelAdmin):
     list_display = ('content', 'category', )
     list_filter = ('category',)
-    fields = ('content', 'category', 'quiz', 'explanation', )
+    fields = ('content','vid', 'category', 'quiz', 'explanation', )
     search_fields = ('content', 'explanation')
     filter_horizontal = ('quiz',)
 
     inlines = [CodeAnswerInline]
+
+class DRDQuestionAdmin(admin.ModelAdmin):
+    list_display = ('content', 'category', )
+    list_filter = ('category',)
+    fields = ('content', 'category', 'quiz', 'explanation', 'field_test1','field_choice1a','field_choice2a','field_choice3a','field_choice4a','field_test2','field_choice1b','field_choice2b','field_choice3b','field_choice4b','field_test3','field_choice1c','field_choice2c','field_choice3c','field_choice4c','field_test4')
+    search_fields = ('content', 'explanation')
+    filter_horizontal = ('quiz',)
+
+    inlines = [DRDAnswerInline]
 
 admin.site.register(Essay_Question, EssayQuestionAdmin)
 admin.site.register(Quiz, QuizAdmin)
@@ -143,4 +156,5 @@ admin.site.register(CSVUpload, CSVUploadsAdmin)
 admin.site.register(DDQuestion,DDQuestionAdmin)
 admin.site.register(FITBQuestion,FITBQuestionAdmin)
 admin.site.register(CodeQuestion,CodeQuestionAdmin)
+admin.site.register(DRDQuestion,DRDQuestionAdmin)
 admin.site.register(Profile)

@@ -25,6 +25,11 @@ class EssayForm(forms.Form):
         super(EssayForm, self).__init__(*args, **kwargs)
         self.fields["answers"] = forms.CharField(widget=forms.Textarea(attrs={'style': 'width:100%'}))
 
+class DRDForm(forms.Form):
+    def __init__(self, question, *args, **kwargs):
+        super(DRDForm, self).__init__(*args, **kwargs)
+        self.fields["answers"] = forms.CharField(widget=TextInput(attrs={'style': 'width:100%'}))
+
 
 class CodeForm(forms.Form):
     def __init__(self, question, *args, **kwargs):

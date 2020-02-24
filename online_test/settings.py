@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'mcq',
     'quiz',
     'ddq',
+    'drdq',
     'fitb',
     'essay',
     'codequestion',

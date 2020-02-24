@@ -1,5 +1,6 @@
 {% extends "base_.html" %}
 {% load i18n%}
+{% load crispy_forms_tags %}
 {% load static %}
 <html>
 {% block title %} {{ quiz.title }} {% endblock %}
@@ -29,27 +30,27 @@
     {% endif %}
 
   {% if previous.previous_outcome %}
-	<div class="alert alert-success">
+  <div class="alert alert-success">
   {% else %}
-	<div class="alert alert-warning">
+  <div class="alert alert-warning">
   {% endif %}
-  	  <p><small>
-		{% trans "Your answer was" %} </small>
-		<strong>
-		  {{ previous.previous_outcome|yesno:"correct,incorrect" }}
-		</strong>
-	  </p>
+      <p><small>
+    {% trans "Your answer was" %} </small>
+    <strong>
+      {{ previous.previous_outcome|yesno:"correct,incorrect" }}
+    </strong>
+    </p>
 
-	</div>
+  </div>
 
-	{% include 'correct_answer.html' %}
+  {% include 'correct_answer.html' %}
 
-	<p><strong>{% trans "Explanation" %}:</strong></p>
-	<div class="well " style="background-color: #fcf8e3;">
-	  <p>{{ previous.previous_question.explanation }}</p>
-	</div>
+  <p><strong>{% trans "Explanation" %}:</strong></p>
+  <div class="well " style="background-color: #fcf8e3;">
+    <p>{{ previous.previous_question.explanation }}</p>
+  </div>
 
-	<hr>
+  <hr>
 
 {% endif %}
 
@@ -88,13 +89,13 @@
     
 <form action="" method="POST" autocomplete="off">{% csrf_token %}
   <ul class="list-group">
-	
+  
 
-	{% for answer in form.answers %}
-	  <li class="list-group-item">
-	       {{ answer }}		
-	  </li>
-	{% endfor %}
+  {% for answer in form.answers %}
+    <li class="list-group-item">
+         {{ answer }}   
+    </li>
+  {% endfor %}
 
   </ul>
     <br>
@@ -103,16 +104,126 @@
     {% if progress.0|add:1 == progress.1 %}
     
   <input type="submit" value={% trans "Submit" %} class="btn btn-outline-success" style="width: 100px">
-	
+  
     {% else %}
           &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input type="submit" value={% trans "Next" %} class="btn btn-outline-success" style="width: 100px">
-		
+    
     {% endif %}
-	
-&nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;	<input type="button" value="Reset" onClick="location.href=location.href" class="btn btn-outline-danger" style="width: 100px" >
+  
+&nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input type="button" value="Reset" onClick="location.href=location.href" class="btn btn-outline-danger" style="width: 100px" >
 
-	
+  
 </form>
+
+{% endif %}
+{% if question.qtype == 'drdq' %}
+        
+<div id = 'justdiv' change= onChange()>
+       
+<form action="" method="POST" autocomplete="off">{% csrf_token %}
+
+  
+  {{question.field_test1|linebreaks}}
+<select id="selectID1" onselect = onSelect()>
+  <option>----select----</option>
+        <option id = "p">{{question.field_choice1a|linebreaks}}</option>
+    <option id = "q">{{question.field_choice2a|linebreaks}}</option>
+    <option id = "r">{{question.field_choice3a|linebreaks}}</option>
+    <option id = "s">{{question.field_choice4a|linebreaks}}</option>
+    
+</select>
+<script type="text/javascript">
+$('#selectID1').change(function() {
+    var optionID1 = $(this).find('option:selected').attr('id')
+    
+    $('#op1').val(optionID1);
+    
+    var i = document.getElementById('op1').value
+    var j = document.getElementById('op2').value
+    var k = document.getElementById('op3').value
+    
+    $('#id_answers').val(i+j+k);
+    
+
+});
+</script>
+<input id = "op1" type="hidden">
+
+ {{question.field_test2|linebreaks}}
+<select id="selectID2" onselect="onSelect()">
+  <option>----select----</option>
+        <option id = "p">{{question.field_choice1b|linebreaks}}</option>
+    <option id = "q">{{question.field_choice2b|linebreaks}}</option>
+    <option id = "r">{{question.field_choice3b|linebreaks}}</option>
+    <option id = "s">{{question.field_choice4b|linebreaks}}</option>
+    
+</select>
+<script>
+$('#selectID2').change(function() {
+    var optionID2 = $(this).find('option:selected').attr('id')
+    
+    $('#op2').val(optionID2);
+    var i = document.getElementById('op1').value
+    var j = document.getElementById('op2').value
+    var k = document.getElementById('op3').value
+    
+    $('#id_answers').val(i+j+k);
+    
+});
+</script>
+<input id = "op2" type="hidden">
+
+ {{question.field_test3|linebreaks}}
+<select id="selectID3" onselect="onSelect()">
+  <option>----select----</option>
+        <option id = "p">{{question.field_choice1c|linebreaks}}</option>
+    <option id = "q">{{question.field_choice2c|linebreaks}}</option>
+    <option id = "r">{{question.field_choice3c|linebreaks}}</option>
+    <option id = "s">{{question.field_choice4c|linebreaks}}</option>
+    
+</select>
+<script type="text/javascript">
+$('#selectID3').change(function() {
+    var optionID3 = $(this).find('option:selected').attr('id')
+    
+    $('#op3').val(optionID3);
+    var i = document.getElementById('op1').value
+    var j = document.getElementById('op2').value
+    var k = document.getElementById('op3').value
+    
+    $('#id_answers').val(i+j+k);
+    
+});
+</script>
+<input id = "op3" type="hidden">
+
+  {{question.field_test4|linebreaks}}
+
+
+  
+  <tr><th></th><td><input type="hidden" name="answers" style="width:100%" required id="id_answers" value=""/></td></tr>
+     <br>
+     
+  
+         
+   <div class="row">
+        
+      
+        
+
+    {% if progress.0|add:1 == progress.1 %}
+     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;<input type="submit" value={% trans "Submit" %} class="btn btn-outline-success" style="width: 100px">
+  
+    {% else %}
+       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;<input type="submit" value={% trans "Next" %} class="btn btn-outline-success" style="width: 100px">
+    
+    {% endif %}
+  &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;<input type="button" value="Reset" onClick="location.href=location.href" class="btn btn-outline-danger" style="width: 100px">
+         </div>
+    
+
+</div>
+
 
 {% endif %}
 {% if question.qtype == 'fitb' %}  
@@ -154,65 +265,6 @@
      <br>
          <br>
          
-	 <div class="row">
-        
-    
-
-    {% if progress.0|add:1 == progress.1 %}
-     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;<input type="submit" value={% trans "Submit" %} class="btn btn-outline-success" style="width: 100px">
-	
-    {% else %}
-       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;<input type="submit" value={% trans "Next" %} class="btn btn-outline-success" style="width: 100px">
-		
-    {% endif %}
-	&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;<input type="button" value="Reset" onClick="location.href=location.href" class="btn btn-outline-danger" style="width: 100px">
-         </div>
-    
-
-</div>
-
-{% endif %}
-</form>
-{% if question.qtype == 'essay' %}  
-       
-<form action="" method="POST" autocomplete="off">{% csrf_token %}
-  <ul class="list-group">
-	
-
-	{% for answer in form.answers %}
-	  <li class="list-group-item">
-	       {{ answer }}		
-	  </li>
-	{% endfor %}
-
-  </ul>
-    <br>
-   
-  
-    {% if progress.0|add:1 == progress.1 %}
-    
-  <input type="submit" value={% trans "Submit" %} class="btn btn-outline-success">
-	
-    {% else %}
-          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input type="submit" value={% trans "Next" %} class="btn btn-outline-success" style="width: 100px">
-		
-    {% endif %}
-	
-&nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;	<input type="button" value="Reset" onClick="location.href=location.href"class="btn btn-outline-danger" style="width: 100px">
-	
-</form>
-
-{% endif %}
-
-{% if question.qtype == 'code' %} 
-{% include 'check.html' %} 
-<form action="" method="POST" autocomplete="off">{% csrf_token %}
-  
-  <tr><th><label for="id_answers"></label></th><td><textarea name="answers" cols="40" rows="10" style="width:100%" required id="id_answers">
-</textarea></td></tr>
-     <br>
-         <br>
-         
    <div class="row">
         
     
@@ -232,6 +284,83 @@
 
 {% endif %}
 </form>
+{% if question.qtype == 'essay' %}  
+       
+<form action="" method="POST" autocomplete="off">{% csrf_token %}
+  <ul class="list-group">
+  
+
+  {% for answer in form.answers %}
+    <li class="list-group-item">
+         {{ answer }}   
+    </li>
+  {% endfor %}
+
+  </ul>
+    <br>
+   
+  
+    {% if progress.0|add:1 == progress.1 %}
+    
+  <input type="submit" value={% trans "Submit" %} class="btn btn-outline-success">
+  
+    {% else %}
+          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input type="submit" value={% trans "Next" %} class="btn btn-outline-success" style="width: 100px">
+    
+    {% endif %}
+  
+&nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <input type="button" value="Reset" onClick="location.href=location.href"class="btn btn-outline-danger" style="width: 100px">
+  
+</form>
+
+{% endif %}
+
+{% if question.qtype == 'code' %} 
+
+<div class="row">
+  <div class = "col-md-6">
+    <br>
+    <video id = "myvideo" width="320" height="240" controls onended="onEnded()">
+        <source src="{{ MEDIA_URL }}{{ question.vid.url }}" type="video/mp4">
+    </video>
+<script>
+function onEnded() {
+  
+  $("#mycompiler").show();
+  $("#myvideo").hide();
+}
+</script> 
+  </div>
+  <div id = "mycompiler" class = "col-md-6" style="display:none">
+{% include 'check.html' %} 
+<form action="" method="POST" autocomplete="off">{% csrf_token %}
+  
+  <tr><th><label for="id_answers"></label></th><td><textarea name="answers" cols="40" rows="10" style="width:100%" required id="id_answers">
+</textarea></td></tr>
+     <br>
+         <br>
+         
+   
+        
+    
+
+    {% if progress.0|add:1 == progress.1 %}
+     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;<input type="submit" value={% trans "Submit" %} class="btn btn-outline-success" style="width: 100px">
+  
+    {% else %}
+       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;<input type="submit" value={% trans "Next" %} class="btn btn-outline-success" style="width: 100px">
+    
+    {% endif %}
+  &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;<input type="button" value="Reset" onClick="location.href=location.href" class="btn btn-outline-danger" style="width: 100px">
+       
+    
+
+
+
+{% endif %}
+</form>
+</div>
+</div>
 
 {% endif %}
   

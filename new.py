@@ -3,5 +3,7 @@ try:
 except ImportError:
     import __builtin__ as builtins
 def fake_input():
-    return '89'
+    return 'toxicvapor'
 builtins.input = fake_input
+a = input()
+print(a[::-1]
